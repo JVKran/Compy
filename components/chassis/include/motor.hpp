@@ -10,7 +10,9 @@
 typedef enum {
     forward     = 0x00,
     backward    = 0x01,
-    stop        = 0x02
+    stop        = 0x02,
+    left        = 0x03,
+    right       = 0x04
 } direction_t;
 
 struct motor_connections_t {

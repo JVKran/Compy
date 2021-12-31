@@ -5,11 +5,11 @@ bool motor_c::fade_installed = false;
 
 static void driver_initialize(const ledc_timer_t pwm_timer){
     ledc_timer_config_t ledc_timer = {
-        .speed_mode         = LEDC_HIGH_SPEED_MODE,           // timer mode
-        .duty_resolution    = LEDC_TIMER_11_BIT, // resolution of PWM duty
-        .timer_num          = pwm_timer,            // timer index
-        .freq_hz            = 20000,                      // frequency of PWM signal
-        .clk_cfg            = LEDC_AUTO_CLK,              // Auto select the source clock
+        .speed_mode         = LEDC_HIGH_SPEED_MODE,
+        .duty_resolution    = LEDC_TIMER_11_BIT,
+        .timer_num          = pwm_timer,
+        .freq_hz            = CONFIG_MOTOR_PWM_FREQ,
+        .clk_cfg            = LEDC_AUTO_CLK,
     };
     ledc_timer_config(&ledc_timer);
 }
@@ -25,7 +25,7 @@ motor_c::motor_c(const motor_connections_t & motor_connections, const ledc_chann
     gpio_config_t io_conf;
     io_conf.intr_type       = GPIO_INTR_DISABLE;
     io_conf.mode            = GPIO_MODE_OUTPUT;
-    io_conf.pull_up_en      = GPIO_PULLUP_DISABLE;                           // Add external 4.7kOhm pull-up.
+    io_conf.pull_up_en      = GPIO_PULLUP_DISABLE;
     io_conf.pull_down_en    = GPIO_PULLDOWN_DISABLE;
 
     io_conf.pin_bit_mask    = 1ULL << connections.forward_pin;
@@ -60,6 +60,9 @@ void motor_c::set_direction(const direction_t & direction){
         case stop: {
             gpio_set_level(connections.forward_pin, 0);
             gpio_set_level(connections.backward_pin, 0);
+            break;
+        }
+        default: {
             break;
         }
     }

@@ -1,0 +1,7 @@
+menu "Robot Configuration"
+
+    config MOTOR_PWM_FREQ
+        int "Frequency of LEDC peripheral."
+        default 20000
+
+endmenu
