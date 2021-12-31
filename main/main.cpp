@@ -18,7 +18,7 @@ motor_c left_motor(left_motor_conn, LEDC_CHANNEL_0, LEDC_TIMER_0);
 motor_c right_motor(right_motor_conn, LEDC_CHANNEL_1, LEDC_TIMER_0);
 chassis_c chassis(left_motor, right_motor);
 
-touch_c touch;
+touch_c touch(touch_pins);
 
 extern "C" void app_main(void){
     while(true){
