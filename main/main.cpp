@@ -22,22 +22,30 @@ touch_c touch(touch_pins);
 
 extern "C" void app_main(void){
     while(true){
-        ESP_LOGI(TAG, "Moving forward with increasing speed.");
-        for(int speed = 0; speed < 100; speed++){
-            chassis.move(forward, speed);
-            vTaskDelay(1);
-        }
-        ESP_LOGI(TAG, "Moving left with speed of 50.");
-        chassis.move(left, 50);
+        ESP_LOGI(TAG, "Moving forward!");
+        chassis.move(forward, 100);
         vTaskDelay(pdMS_TO_TICKS(5000));
-        ESP_LOGI(TAG, "Moving right with speed of 50.");
-        chassis.move(right, 50);
+
+        ESP_LOGI(TAG, "Moving left!");
+        chassis.move(left, 100);
         vTaskDelay(pdMS_TO_TICKS(5000));
+
+        ESP_LOGI(TAG, "Moving right!");
+        chassis.move(right, 100);
+        vTaskDelay(pdMS_TO_TICKS(5000));
+
         ESP_LOGI(TAG, "Stopping!");
         chassis.move(stop, 0);
         vTaskDelay(pdMS_TO_TICKS(5000));
-        ESP_LOGI(TAG, "Moving backward with speed of 100.");
+
+        ESP_LOGI(TAG, "Moving backward with speed of 100!");
         chassis.move(backward, 100);
         vTaskDelay(pdMS_TO_TICKS(5000));
+
+        for(uint8_t speed = 75; speed <= 100; speed += 5){
+            chassis.move(forward, speed);
+            ESP_LOGI(TAG, "Increasing speed to %i!", speed);
+            vTaskDelay(pdMS_TO_TICKS(1000));
+        }
     }
 }
